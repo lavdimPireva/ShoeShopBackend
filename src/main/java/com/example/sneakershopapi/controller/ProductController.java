@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/products/")
 public class ProductController {
 
 
@@ -30,6 +30,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+
+    @GetMapping("/")
+    public String home() {
+        return "Health check passed! The application is running.";
+    }
 
 
 

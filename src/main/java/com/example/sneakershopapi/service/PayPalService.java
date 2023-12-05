@@ -11,6 +11,7 @@ import com.paypal.orders.OrdersAuthorizeRequest;
 import com.paypal.payments.AuthorizationsCaptureRequest;
 import com.paypal.payments.Capture;
 import com.paypal.payments.CaptureRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,16 +23,12 @@ public class PayPalService {
 
     private PayPalHttpClient client;
 
-    public PayPalService() {
-        // Create a sandbox environment
-        PayPalEnvironment environment = new PayPalEnvironment.Sandbox(
-                "AaDB9BLBOTGEdALBeyLGHW3i4D8OjuZuwWmzfV3iy0aFP1L1BEqQi2hxRsGCcFqGgg5PG3CzWc5Omr_S",
-                "EBfNYMqONb1bsM_7ZJjA29bI-w85vKrRqShy-f8FkGlSKPzuSqn3_7tIxPQQw7sITN90qtZAbvJK8PU3"
-        );
+    public PayPalService(@Value("${paypal.client.id}") String clientId,
+                         @Value("${paypal.client.secret}") String clientSecret) {
+        // Create a sandbox environment using the injected values
+        PayPalEnvironment environment = new PayPalEnvironment.Sandbox(clientId, clientSecret);
         this.client = new PayPalHttpClient(environment);
-        System.out.println("this client" + this.client);
     }
-
 
     public CaptureResponseDTO authorizeAndCaptureOrder(String orderId) {
         try {
@@ -96,7 +93,6 @@ public class PayPalService {
 
 
     public static void printCaptureProperties(Capture capture) {
-        System.out.println("Hello ??");
         for (Method method : capture.getClass().getDeclaredMethods()) {
             if (method.getName().startsWith("get")) {
                 try {

@@ -21,7 +21,6 @@ public class PaymentController {
 
     @PostMapping("/capture-order")
     public ResponseEntity<?> captureOrder(@RequestBody OrderCaptureRequest orderCaptureRequest) {
-        System.out.println("Hini brenda");
 
         try {
             CaptureResponseDTO captureDTO = payPalService.authorizeAndCaptureOrder(orderCaptureRequest.getOrderId());
