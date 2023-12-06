@@ -2,7 +2,6 @@ package com.example.sneakershopapi.controller;
 import com.example.sneakershopapi.entity.Products;
 import com.example.sneakershopapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,6 @@ public class ProductController {
     @GetMapping("/")
     public List<Products> getAllProducts() {
         count++;
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
         return productService.getAllProducts();
     }
 
