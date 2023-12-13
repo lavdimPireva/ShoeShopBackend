@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 
 @Service
@@ -54,21 +53,9 @@ public class PayPalService {
 
             if (captureResponse.result() != null) {
                 Capture capture = captureResponse.result();
-                printCaptureProperties(capture);
-
-
                 CaptureResponseDTO dto = new CaptureResponseDTO();
                 dto.setId(capture.id());
                 dto.setStatus(capture.status());
-
-
-                // Check if amount is not null before accessing its value
-                if (capture.amount() != null && capture.amount().value() != null) {
-                    dto.setAmount(capture.amount().value());
-                } else {
-                    dto.setAmount("Amount not available");
-                    // or handle this scenario appropriately
-                }
 
                 return dto;
             } else {
@@ -91,23 +78,7 @@ public class PayPalService {
         }
     }
 
-
-    public static void printCaptureProperties(Capture capture) {
-        for (Method method : capture.getClass().getDeclaredMethods()) {
-            if (method.getName().startsWith("get")) {
-                try {
-                    System.out.println(method.getName() + ": " + method.invoke(capture));
-                } catch (Exception e) {
-                    System.err.println("Error accessing method " + method.getName());
-                }
-            }
-        }
-
-    }
-
-    public static void main(String[] args) {
-
-
-    }
-
 }
+
+
+

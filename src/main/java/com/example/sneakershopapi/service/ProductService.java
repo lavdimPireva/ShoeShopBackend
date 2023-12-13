@@ -3,6 +3,7 @@ package com.example.sneakershopapi.service;
 import com.example.sneakershopapi.entity.Products;
 import com.example.sneakershopapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Products> getAllProducts() {
-        return productRepository.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        return productRepository.findAll(sort);
     }
 
     // Service methods that use the repository to interact with the database
